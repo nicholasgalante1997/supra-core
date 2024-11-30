@@ -1,0 +1,10 @@
+{
+    "name": "@supra/configs",
+    "type": "module",
+    "private": true,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/",
+        "tag": "latest"
+    }
+}

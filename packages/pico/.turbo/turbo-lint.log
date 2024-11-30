@@ -1,0 +1,10 @@
+
+[0m[2m[35m$[0m [2m[1meslint lib build.js[0m
+[31m
+Oops! Something went wrong! :(
+
+ESLint: 9.15.0
+
+No files matching the pattern "build.js" were found.
+Please check for typing mistakes in the pattern.
+[39m
