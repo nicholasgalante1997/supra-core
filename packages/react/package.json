@@ -1,7 +1,7 @@
 {
-  "name": "@supra-dev/pico",
-  "description": "A simple javscript client side manager for @picocss/pico",
-  "version": "1.0.0-alpha.2",
+  "name": "@supra-dev/react",
+  "description": "A library to support rendering React components in non-js server environments",
+  "version": "1.0.0-alpha.1",
   "type": "module",
   "module": "out/index.js",
   "types": "out/lib/index.d.ts",
@@ -17,11 +17,7 @@
   "scripts": {
     "format": "prettier --write lib",
     "lint": "eslint lib",
-    "test": "DEBUG=supra:pico:tests:* bun run lib/__tests__/index.test.ts",
-    "bundle:browser": "bun run build/browser.ts",
-    "check-types": "tsc -p tsconfig.json",
-    "build": "run-s bundle:* rm:test-types",
-    "rm:test-types": "rm -rf out/lib/__tests__"
+    "check-types": "tsc -p tsconfig.json"
   },
   "publishConfig": {
     "access": "public",
@@ -29,20 +25,31 @@
     "tag": "latest"
   },
   "packageManager": "bun@1.1.34",
+  "peerDependencies": {
+    "react": "^19.0.0-rc-5b0ef217-20241202",
+    "react-dom": "^19.0.0-rc-5b0ef217-20241202",
+    "typescript": "^5.7.2"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
     "@eslint/js": "^9.16.0",
-    "@picocss/pico": "^2.0.6",
     "@supra-dev/configs": "workspace:*",
     "@types/bun": "latest",
     "@types/debug": "^4.1.12",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "debug": "^4.3.7",
-    "esbuild": "^0.24.0",
     "eslint": "^9.16.0",
     "globals": "^15.12.0",
     "node-emoji": "^2.1.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.3.3",
+    "react": "^19.0.0-rc-5b0ef217-20241202",
+    "react-dom": "^19.0.0-rc-5b0ef217-20241202",
+    "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
   }
 }

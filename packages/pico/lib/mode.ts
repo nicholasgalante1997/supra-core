@@ -1,4 +1,4 @@
-const modes = ['dark', 'light'] as const;
+export const modes = ['dark', 'light'] as const;
 
 export function mountThemeModeDataAttributeToNode(
   node: HTMLElement,

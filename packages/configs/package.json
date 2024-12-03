@@ -1,5 +1,5 @@
 {
-    "name": "@supra/configs",
+    "name": "@supra-dev/configs",
     "type": "module",
     "private": true,
     "publishConfig": {

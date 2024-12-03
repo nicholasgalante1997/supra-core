@@ -30,7 +30,7 @@ This is from the `@picocss/pico` [docs](https://github.com/picocss/pico).
 >
 > Write HTML, Add Pico CSS, and Voilà!
 
-I highly advise you to read the [docs](https://picocss.com/).  
+I highly advise you to read the [docs](https://picocss.com/).
 
 What the team behind Pico is doing is phenomenal. Whether or not you like the visual appeal of it, it is objectively a hyper performant, modern, and responsive approach to css, with a number of other out of the box benefits. If `tailwindcss` represents the bane of the growing complexity of the modern css landscape, `@picocss/pico` stands in refreshing and competent juxtapositon.
 

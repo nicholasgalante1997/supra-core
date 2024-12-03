@@ -1,5 +1,5 @@
 {
-  "name": "@supra/workspace",
+  "name": "@supra-dev/workspace",
   "type": "module",
   "private": true,
   "workspaces": ["packages/*"],
@@ -9,7 +9,8 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\"",
-    "start": "turbo start"
+    "start": "turbo start",
+    "publish-packages": "turbo run build lint test && changeset version && changeset publish"
   },
   "devDependencies": {
     "@types/bun": "latest",

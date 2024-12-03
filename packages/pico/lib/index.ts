@@ -12,15 +12,15 @@ function pico(options?: Partial<SupraPicoContructorOptions>) {
 
   const init = () => {
     instance.init();
-  }
+  };
 
   const render = () => {
     instance.render();
-  }
+  };
 
   const unmount = () => {
     instance.unmount();
-  }
+  };
 
   return {
     _pico: instance,
