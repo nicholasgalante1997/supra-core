@@ -17,7 +17,10 @@
   "scripts": {
     "format": "prettier --write lib",
     "lint": "eslint lib",
-    "check-types": "tsc -p tsconfig.json"
+    "check-types": "tsc -p tsconfig.json",
+    "bundle:cli": "bun run build/cli.ts",
+    "bundle:cli:experimental": "bun run build/cli.experimental.ts",
+    "build": "run-s check-types bundle:*"
   },
   "publishConfig": {
     "access": "public",

@@ -1,0 +1,15 @@
+[package]
+name = "debugrs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nick Galante <nickwindows100@gmail.com>"]
+description = "A simple Rust logger that mimics the npm debug module."
+license = "MIT"  
+repository = "https://github.com/nicholasgalante1997/supra-core/tree/main/packages/debugrs"
+documentation = "https://docs.rs/debugrs"
+
+[dependencies]
+rand = "0.8.5"
+dotenv = "0.15"
+emojis = "0.6.4"
+regex = "1.5"

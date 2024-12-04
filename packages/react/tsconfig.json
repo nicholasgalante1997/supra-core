@@ -1,5 +1,5 @@
 {
-    "extends": "@supra/configs/typescript/base.tsconfig.json",
+    "extends": "@supra-dev/configs/typescript/base.tsconfig.json",
     "compilerOptions": {
         "rootDir": "./",
         "resolveJsonModule": true,
