@@ -161,6 +161,10 @@ impl RsDebugger {
                     return true;
                 }
 
+                if debug_labels.ends_with(":*") {
+                    return self.label.starts_with(&debug_labels[..debug_labels.len() - 1]);
+                }
+
                 self.label.contains(debug_labels.as_str())
             }
             _ => false,

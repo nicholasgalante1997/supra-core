@@ -1,6 +1,5 @@
 use std::process::Command;
-
-use crate::logger::debugger_lite::RsDebugger;
+use debugrs::RsDebugger;
 
 pub fn check_for_bun_in_env() -> Option<String> {
     let mut bun_logger = RsDebugger::new(String::from("rssr:bun:utilities"));
