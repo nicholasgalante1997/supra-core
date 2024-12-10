@@ -4,23 +4,61 @@
 
 A simple logger for Rust based on the Node.js [`debug`](https://npmjs.com/package/debug) lightweight logging library.
 
+## Feature Parity Benchmarks
+
+* Env based label filtering
+* Emoji support
+* Timed logging events
+* ANSI 256 color support
+* Child logger extensions
+* Granular enabling of loggers via programmatic API
+
 ## Usage
 
 ```rust
 use debugrs::RsDebugger;
- 
+
 let mut debugger = RsDebugger::new(String::from("app"));
 debugger.write(String::from("App booting!... :rocket:")); // > [app] App booting!... 🚀 +0ms
- 
+
 let mut child = debugger.extend(String::from("child-process"));
-child.write(String::from("Child process booting!... :rocket:")); // > [app:child-process] Child process booting!... 🚀 +0ms
+child.write(String::from("Child process booting!... :rocket:")); // > [app:child-process] Child process booting!... 🚀 +221ms
+```  
+
+_RsDebugger instances need to be mutable to update internal timing state within the `write` method.  
+
+## Environment Variables
+
+* `DEBUG`: Comma separated list of labels to log or just a single label
+
+## Thread Safety
+
+* `RsDebugger` is thread safe
+
+Here's an example of using the thread-safe RsDebugger in a multithreaded environment:
+
+```rust
+use std::thread;
+use std::sync::{Arc, Mutex};
+use debugrs::RsDebugger;
+ 
+fn main() {
+    let mut debugger = Arc::new(Mutex::new(RsDebugger::new(String::from("app"))));
+
+    let handles: Vec<_> = (0..5).map(|i| {
+        let mut debugger = Arc::clone(&debugger);
+        thread::spawn(move || {
+            let mut debugger = debugger.lock().unwrap();
+            debugger.write(format!("Log from thread {}", i));
+        })
+   }).collect();
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+}
+
 ```
-
-## Feature Support
-
-- Env based label filtering
-- Emoji support (thanks to the `emojis` crate)
-- Timed log events
 
 ## Conventions
 
@@ -67,7 +105,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## Contributing
-
-Please fork this repo and create a pull request. For more details, see [`Contributing.md`](./Contributing.md).
