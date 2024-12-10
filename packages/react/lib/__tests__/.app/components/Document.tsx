@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function Document({ children }) {
+type Props = {
+  children: React.ReactNode
+}
+
+export default function Document({ children }: Props) {
   return (
     <html lang="en">
       <head>

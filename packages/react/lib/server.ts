@@ -17,7 +17,7 @@ async function pipeComponent<W extends WritableStream<T>, T = any>(component: Re
   stream.pipeTo(writable);
 }
 
-export async function loadComponent(
+export async function loadModule(
   pathlike: string,
   name: string = "default"
 ) {
@@ -28,13 +28,18 @@ export async function loadComponent(
   return loadedModule[name] || null;
 }
 
-export async function pipeComponentToStdout(component: React.ReactElement, options: ReactDOMServer.RenderToReadableStreamOptions = {}) {
+export async function pipeComponentToWritableCallback(component: React.ReactElement, cb: (chunk: string) => void, options: ReactDOMServer.RenderToReadableStreamOptions = {}) {
   const stream = await transformComponentToReadableStream(component, options);
   const reader = stream.getReader();
   const decoder = new TextDecoder();
-  let result: any = { value: undefined, done: false };
+  let result: Bun.ReadableStreamDefaultReadResult<any> = { value: undefined, done: false };
   while (!result.done) {
     result = await reader.read()
-    process.stdout.write(decoder.decode(result.value));
+    let chunk = decoder.decode(result.value);
+    cb(chunk);
   }
+}
+
+export async function pipeComponentToStdout(component: React.ReactElement, options: ReactDOMServer.RenderToReadableStreamOptions = {}) {
+  await pipeComponentToWritableCallback(component, (chunk) => process.stdout.write(chunk), options);
 }

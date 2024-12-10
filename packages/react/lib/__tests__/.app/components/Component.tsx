@@ -16,3 +16,5 @@ export default function Component() {
     
     return <div>Component {memoizedStateValue}</div>;
 }
+
+export { Component };
