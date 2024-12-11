@@ -5,6 +5,7 @@ export const base: BunBuildConfig = {
     outdir: './out',
     target: 'bun',
     format: 'esm',
+    
     splitting: false,
     minify: true,
     external: ['react', 'react-dom']

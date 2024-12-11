@@ -2,6 +2,13 @@
 name = "rssr"
 version = "0.1.0"
 edition = "2021"
+authors = ["Nick Galante <rustycloud42@protonmail.com>"]
+description = "A crate to server side render React.js components"
+repository = "vhttps://github.com/nicholasgalante1997/supra-core/tree/main/packages/rssr"
+
+[build]
+include = ["assets/*"]
+
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
@@ -11,4 +18,4 @@ rand = "0.8.5"
 dotenv = "0.15"
 emojis = "0.6.4"
 regex = "1.5"
-debugrs = "0.1.0"
+debugrs = "0.2.0"

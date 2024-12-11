@@ -7,6 +7,7 @@ info('building `cli` executable, format: esm :hammer: :hammer: :hammer:');
 
 await Bun.build({
     ...base,
+    format: 'cjs',
     bytecode: true,
     outdir: './out/bytecode'
 });

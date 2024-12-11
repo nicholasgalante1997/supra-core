@@ -1,0 +1,5 @@
+#! /bin/bash
+
+rm -rf ./packages/rssr/assets/* && \
+mkdir -p ./packages/rssr/assets && \
+cp -R ./packages/react/out/* ./packages/rssr/assets/;
