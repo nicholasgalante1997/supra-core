@@ -18,29 +18,36 @@ export type SupraPicoContructorOptions = {
   ui?: HTMLElement;
   mode?: 'light' | 'dark';
   root?: HTMLElement | null;
+  id?: string;
 };
 
-const defaults: SupraPicoContructorOptions = {
-  theme: 'default',
-  mode: prefersDarkMode() ? 'dark' : 'light',
+function getSupraPicoConstructorOptionDefaults() {
+  const defaults = {
+    theme: 'default',
+    mode: prefersDarkMode() ? 'dark' : 'light',
+  
+    skipInit: false,
+    skipRender: false,
+  
+    source: 'jsdelivr',
+    prefersClassless: false,
+  
+    ui: createDefaultUi(),
+    root: getDefaultDocumentRoot(),
 
-  skipInit: false,
-  skipRender: false,
+    id: undefined,
+  
+    disableHotKeys: false,
+  
+    onRender: (ui) => {
+      mountElementToRenderTarget(ui, defaults.root!);
+    },
+    onInit: () => {
+      console.log('[@supra/pico] initialized!');
+    }
+  } as SupraPicoContructorOptions;
 
-  source: 'jsdelivr',
-  prefersClassless: false,
-
-  ui: createDefaultUi(),
-  root: getDefaultDocumentRoot(),
-
-  disableHotKeys: false,
-
-  onRender: (ui) => {
-    mountElementToRenderTarget(ui, defaults.root!);
-  },
-  onInit: () => {
-    console.log('[@supra/pico] initialized!');
-  }
+  return defaults;
 };
 
 class SupraPico {
@@ -54,6 +61,7 @@ class SupraPico {
   private ui?: HTMLElement;
   private mode?: 'light' | 'dark';
   private root?: HTMLElement | null;
+  private id?: string;
   private disableHotKeys?: boolean;
 
   constructor(options: SupraPicoContructorOptions = {}) {
@@ -73,8 +81,17 @@ class SupraPico {
     this.ui = options.ui;
     this.root = options.root;
     this.disableHotKeys = options.disableHotKeys;
+
+    this.id = options.id;
   }
 
+  /**
+   * Initializes the SupraPico instance by performing the following actions:
+   * - Mounts the theme link to the DOM unless skipInit is true.
+   * - Sets up the initial theme mode for the document.
+   * - Optionally sets up hotkeys if they are not disabled.
+   * - Executes the onInit callback if provided.
+   */
   init() {
     if (this.skipInit) return;
     this.mountLinkToDOM();
@@ -138,7 +155,8 @@ class SupraPico {
     return createLinkFromLinkOptions({
       prefersClassless: this.prefersClassless,
       source: this.source,
-      theme: this.theme
+      theme: this.theme,
+      id: this.id
     });
   }
 
@@ -146,7 +164,7 @@ class SupraPico {
     options: SupraPicoContructorOptions = {}
   ) {
     return {
-      ...defaults,
+      ...getSupraPicoConstructorOptionDefaults(),
       ...options
     };
   }

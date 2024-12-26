@@ -1,34 +1,41 @@
-import assert from 'assert';
-import debug from 'debug';
-
+import { describe, test, expect } from 'bun:test';
 import { getThemeURI } from '../cdn';
 
-const testLogger = debug('supra:pico:tests:cdn');
+describe('lib/cdn.ts', () => {
+  test('getThemeURI', () => {
+    expect(getThemeURI('default')).toBe(
+      'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css'
+    );
+  });
 
-testLogger('Running CDN Tests');
+  test('getThemeURI with classless', () => {
+    expect(getThemeURI('default', true)).toBe(
+      'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css'
+    );
+  });
 
-/** Default */
-assert(
-  getThemeURI('default') ===
-    'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css'
-);
+  test('getThemeURI with unpkg', () => {
+    expect(getThemeURI('default', false, 'unpkg')).toBe(
+      'https://unpkg.com/@picocss/pico@2.0.6/css/pico.min.css'
+    );
+  });
 
-/** Default Classless */
-assert(
-  getThemeURI('default', true) ===
-    'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css'
-);
+  test('getThemeURI with unpkg and classless', () => {
+    expect(getThemeURI('default', true, 'unpkg')).toBe(
+      'https://unpkg.com/@picocss/pico@2.0.6/css/pico.classless.min.css'
+    );
+  });
 
-/** Unpkg Default */
-assert(
-  getThemeURI('default', false, 'unpkg') ===
-    'https://unpkg.com/@picocss/pico@2.0.6/css/pico.min.css'
-);
+  test('getThemeURI with a pico theme', () => {
+    expect(getThemeURI('cyan')).toBe(
+      'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.cyan.min.css'
+    );
+  });
 
-/** Unpkg Default Classless */
-assert(
-  getThemeURI('default', true, 'unpkg') ===
-    'https://unpkg.com/@picocss/pico@2.0.6/css/pico.classless.min.css'
-);
+  test('getThemeURI with a pico theme and classless', () => {
+    expect(getThemeURI('cyan', true)).toBe(
+      'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.cyan.min.css'
+    );
+  });
 
-testLogger('Finished CDN Tests!');
+});

@@ -7,6 +7,7 @@ type CreatePicoLinkOptions = {
   source?: string;
   theme?: ThemeColor;
   prefersClassless?: boolean;
+  id?: string;
 };
 
 export function createLinkFromLinkOptions(
@@ -18,7 +19,7 @@ export function createLinkFromLinkOptions(
 
   link.rel = 'stylesheet';
   link.dataset.supraIntent = 'pico';
-  link.id = LINK_ID;
+  link.id = options.id || LINK_ID;
 
   const source = options.source || 'jsdelivr';
   const theme = options.theme || 'default';
