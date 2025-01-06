@@ -1,1 +1,1 @@
-pub fn get_os_platform() 
+pub fn get_os_platform() {} 

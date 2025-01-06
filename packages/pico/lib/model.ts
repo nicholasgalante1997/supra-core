@@ -1,9 +1,9 @@
 import { setupOnKeyDownEventHandler } from './hotkeys';
-import { createLinkFromLinkOptions, deleteLink } from './link';
+import { createLinkFromLinkOptions, deleteLink, getDefaultLinkOptions } from './link';
 import { prefersDarkMode } from './media';
 import { mountThemeModeDataAttributeToNode } from './mode';
 import { getDefaultDocumentRoot } from './root';
-import { type ThemeColor } from './themes';
+import themeColors, { type ThemeColor } from './themes';
 import createDefaultUi, { mountElementToRenderTarget } from './ui';
 
 export type SupraPicoContructorOptions = {
@@ -25,20 +25,20 @@ function getSupraPicoConstructorOptionDefaults() {
   const defaults = {
     theme: 'default',
     mode: prefersDarkMode() ? 'dark' : 'light',
-  
+
     skipInit: false,
     skipRender: false,
-  
+
     source: 'jsdelivr',
     prefersClassless: false,
-  
+
     ui: createDefaultUi(),
     root: getDefaultDocumentRoot(),
 
     id: undefined,
-  
+
     disableHotKeys: false,
-  
+
     onRender: (ui) => {
       mountElementToRenderTarget(ui, defaults.root!);
     },
@@ -48,7 +48,7 @@ function getSupraPicoConstructorOptionDefaults() {
   } as SupraPicoContructorOptions;
 
   return defaults;
-};
+}
 
 class SupraPico {
   private onInit?: () => void;
@@ -94,6 +94,7 @@ class SupraPico {
    */
   init() {
     if (this.skipInit) return;
+    this.mountPreloadLinksToDom();
     this.mountLinkToDOM();
     this.setupInitialThemeMode();
     if (!this.disableHotKeys) this.setupHotKeys();
@@ -143,6 +144,23 @@ class SupraPico {
     }
   }
 
+  private mountPreloadLinksToDom() {
+    if (typeof document !== "undefined") {
+      for (const theme of themeColors) {
+        const link = createLinkFromLinkOptions({
+          htmlAttributes: getDefaultLinkOptions('preload'),
+          picoOptions: {
+            cdn: this.source,
+            classless: this.prefersClassless,
+            theme 
+          }
+        });
+
+        link && document.head.appendChild(link);
+      }
+    }
+  }
+
   private setupInitialThemeMode() {
     mountThemeModeDataAttributeToNode(this.root!, this.mode!);
   }
@@ -153,16 +171,16 @@ class SupraPico {
 
   private createLink(): HTMLLinkElement | null {
     return createLinkFromLinkOptions({
-      prefersClassless: this.prefersClassless,
-      source: this.source,
-      theme: this.theme,
-      id: this.id
+      htmlAttributes: getDefaultLinkOptions('stylesheet', { id: this.id }),
+      picoOptions: {
+        classless: this.prefersClassless,
+        theme: this.theme,
+        cdn: this.source
+      }
     });
   }
 
-  private mergePartialOptionsWithDefaultOptions(
-    options: SupraPicoContructorOptions = {}
-  ) {
+  private mergePartialOptionsWithDefaultOptions(options: SupraPicoContructorOptions = {}) {
     return {
       ...getSupraPicoConstructorOptionDefaults(),
       ...options

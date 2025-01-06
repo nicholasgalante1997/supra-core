@@ -7,10 +7,7 @@ export function setupOnKeyDownEventHandler(pico: SupraPico) {
       const currentThemeIndex = themeColors.indexOf(pico.getTheme()!);
 
       if (currentThemeIndex === -1) {
-        console.warn(
-          '[@supra/pico] Could not find the current theme %s',
-          pico.getTheme()
-        );
+        console.warn('[@supra/pico] Could not find the current theme %s', pico.getTheme());
         return;
       }
 
@@ -25,10 +22,7 @@ export function setupOnKeyDownEventHandler(pico: SupraPico) {
       }
 
       if (isCommandKeyIntentfulPress && commandIntentKey === 'ArrowLeft') {
-        const lastThemeIndex =
-          currentThemeIndex === 0
-            ? themeColors.length - 1
-            : currentThemeIndex - 1;
+        const lastThemeIndex = currentThemeIndex === 0 ? themeColors.length - 1 : currentThemeIndex - 1;
         const lastTheme = themeColors[lastThemeIndex];
         pico.updateTheme(lastTheme);
         return;

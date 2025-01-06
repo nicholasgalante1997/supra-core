@@ -2,9 +2,9 @@ import SupraPico, { type SupraPicoContructorOptions } from './model';
 import themes from './themes';
 
 Object.defineProperty(SupraPico, 'themes', {
-  get: () => themes,
   value: themes,
-  writable: false
+  writable: false,
+  enumerable: true
 });
 
 interface PicoX {
@@ -48,7 +48,7 @@ function pico(options?: Partial<SupraPicoContructorOptions>): PicoX {
     enumerable: true
   });
 
-  Object.defineProperty($pico, '__root_instance__', {
+  Object.defineProperty($pico, '__SupraPico__', {
     value: instance,
     writable: false,
     enumerable: false

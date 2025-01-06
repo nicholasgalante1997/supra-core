@@ -9,10 +9,7 @@ function createDefaultUi(): HTMLElement | undefined {
   return ui;
 }
 
-export function mountElementToRenderTarget(
-  element: HTMLElement,
-  target: HTMLElement
-) {
+export function mountElementToRenderTarget(element: HTMLElement, target: HTMLElement) {
   target.appendChild(element);
 }
 

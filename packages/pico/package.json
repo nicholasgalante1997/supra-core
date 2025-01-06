@@ -1,7 +1,7 @@
 {
   "name": "@supra-dev/pico",
   "description": "A simple javscript client side manager for @picocss/pico",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.3.1",
   "type": "module",
   "module": "out/index.js",
   "types": "out/lib/index.d.ts",
