@@ -6,6 +6,7 @@ use emojis;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use std::env;
+use std::fmt::Display;
 use std::io::{self, BufWriter, Write};
 use std::sync::{Arc, Mutex};
 use std::time::Instant;
@@ -172,14 +173,14 @@ impl RsDebugger {
     /// debugger.write(String::from("App booting!... :rocket:")); // > [app] App booting!... 🚀 +0ms
     /// ```
     ///
-    pub fn write(&mut self, logline: String) {
+    pub fn write<T: Display>(&mut self, logline: T) {
         if !self.is_enabled() {
             return;
         }
 
         let label = self.format_label();
         let timestamp = self.format_timestamp();
-        let emoji_safe_logline = self.replace_emojis(logline);
+        let emoji_safe_logline = self.replace_emojis(format!("{}", logline));
         let formatted_logline = format!("{} {} {}\n", label, emoji_safe_logline, timestamp);
         let stdout = io::stdout();
         let mut writer = BufWriter::new(stdout.lock());
@@ -192,9 +193,7 @@ impl RsDebugger {
                     Ok(mut instant) => {
                         *instant = Some(Instant::now());
                     }
-                    Err(_) => {
-                        eprintln!("Error while reading the value of `instant` in the debugger");
-                    },
+                    Err(_) => {},
                 }
             }
         };
@@ -241,8 +240,7 @@ impl RsDebugger {
                     }
                 }
             },
-            Err(error) => {
-                eprintln!("Error while reading the value of `instant` in the debugger: {:#?}", error);
+            Err(_error) => {
                 String::from("-ms")
             }
         }
@@ -263,18 +261,14 @@ impl RsDebugger {
     pub fn enable(&mut self) {
         match self.enabled.lock() {
             Ok(mut enabled) => *enabled = true,
-            Err(_) => {
-                eprintln!("Error while reading the value of `enabled` in the debugger");
-            },
+            Err(_) => {},
         }
     }
 
     pub fn disable(&mut self) {
         match self.enabled.lock() {
             Ok(mut enabled) => *enabled = false,
-            Err(_) => {
-                eprintln!("Error while reading the value of `enabled` in the debugger");
-            },
+            Err(_) => {},
         }
     }
 
@@ -282,7 +276,6 @@ impl RsDebugger {
         match self.enabled.lock() {
             Ok(enabled) => *enabled,
             Err(_) => {
-                eprintln!("Error while reading the value of `enabled` in the debugger");
                 false
             },
         }

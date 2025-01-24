@@ -40,8 +40,7 @@ pub fn get_ansi_color_sequence() -> String {
 
 /// Checks if the terminal supports colors by inspecting environment variables.
 fn supports_colors() -> bool {
-    let term = env::var("TERM").unwrap_or_else(|error| {
-        eprintln!("Environment variable `TERM` could not be read: {:?}", error);
+    let term = env::var("TERM").unwrap_or_else(|_error| {
         "dumb".to_string()
     });
 
@@ -50,8 +49,7 @@ fn supports_colors() -> bool {
 
 /// Determines if the terminal supports 256 colors.
 fn supports_256_colors() -> bool {
-    let term = env::var("TERM").unwrap_or_else(|error| {
-        eprintln!("Environment variable `TERM` could not be read: {:?}", error);
+    let term = env::var("TERM").unwrap_or_else(|_error| {
         "dumb".to_string()
     });
 
@@ -60,8 +58,7 @@ fn supports_256_colors() -> bool {
 
 /// Determines if the terminal supports 16 colors.
 fn supports_16_colors() -> bool {
-    let term = env::var("TERM").unwrap_or_else(|error| {
-        eprintln!("Environment variable `TERM` could not be read: {:?}", error);
+    let term = env::var("TERM").unwrap_or_else(|_error| {
         "dumb".to_string()
     });
 
@@ -72,11 +69,7 @@ fn supports_16_colors() -> bool {
 fn supports_24bit_colors() -> bool {
     env::var("COLORTERM")
         .map(|v| v == "truecolor" || v == "24bit")
-        .unwrap_or_else(|error| {
-            eprintln!(
-                "Environment variable `COLORTERM` could not be read: {:?}",
-                error
-            );
+        .unwrap_or_else(|_error| {
             false
         })
 }

@@ -1,9 +1,12 @@
 use once_cell::sync::Lazy;
+use std::fmt::Display;
 use std::env;
 use std::sync::Mutex;
 
 mod debugger;
 mod utils;
+
+pub mod debug_macro;
 
 pub use debugger::RsDebugger;
 
@@ -22,7 +25,7 @@ static DEFAULT_LOGGER: Lazy<Mutex<RsDebugger>> = Lazy::new(|| {
 /// 
 /// To set the default logger label, set the `DEBUG_DEFAULT_LABEL` environment variable.
 ///
-pub fn log(message: &str) {
+pub fn log<T: Display>(message: T) {
     if let Ok(mut logger) = DEFAULT_LOGGER.lock() {
         logger.write(message.to_string());
     }

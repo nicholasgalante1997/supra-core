@@ -1,6 +1,6 @@
 [package]
 name = "debugrs"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Nick Galante <nickwindows100@gmail.com>"]
 description = "A simple Rust logger that mimics the npm debug module."
